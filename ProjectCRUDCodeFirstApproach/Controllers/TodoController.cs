@@ -51,7 +51,7 @@ namespace ProjectCRUDCodeFirstApproach.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit([Bind(Exclude ="CreatedAt, UpdatedAt")]Todo todo)
+        public ActionResult Edit([Bind(Exclude = "CreatedAt, UpdatedAt")] Todo todo)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +65,16 @@ namespace ProjectCRUDCodeFirstApproach.Controllers
             {
                 Debug.Write(todo.ToString());
             }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Delete(int id)
+        {
+
+            var todoData = dbContext.Todos.Find(id);
+            dbContext.Todos.Remove(todoData);
+            dbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
     }
