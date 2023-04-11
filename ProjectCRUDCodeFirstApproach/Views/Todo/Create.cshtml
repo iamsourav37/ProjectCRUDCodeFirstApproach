@@ -4,13 +4,22 @@
     ViewBag.Title = "Create Todo";
 }
 
-<h2>Create</h2>
+<h2>Create</h2><br />
+<h2 id="change">Change This Text By Clicking the below Button</h2>
+
+<div>
+    <button id="myButton" class="btn btn-success">Call Controller Action</button>
 
 
-@using (Html.BeginForm()) 
+</div>
+<br />
+<br />
+<br />
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Todo</h4>
         <hr />
@@ -18,7 +27,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="text" name="Title" />
+                @*@Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,6 +53,19 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#myButton").click(function () {
+                console.log("Hii");
+                $.get("https://jsonplaceholder.typicode.com/todos/1", function (data, status) {
+                    $("#change").text(data.title);
+                    console.log(data);
+                    console.log(status);
+                });
+            });
+        });
+    </script>
 }

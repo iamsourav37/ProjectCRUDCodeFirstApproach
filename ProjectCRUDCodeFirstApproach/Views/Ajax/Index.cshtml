@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<br />
+<br />
+<br />
+<button class="btn btn-success" id="get-todos-btn">Get All Todos using Ajax</button>
+<br />
+<br />
+<br />
+
+<table id="todos-table" class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#get-todos-btn').click(function () {
+                $.ajax({
+                    url: "/Ajax/GetTodos",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        var table = $('#todos-table').find('tbody');
+                        table.empty();
+                        $.each(data, function (index, item) {
+                            var row = $('<tr>').appendTo(table);
+                            $('<td>').text(item.Id).appendTo(row);
+                            $('<td>').text(item.Title).appendTo(row);
+                            $('<td>').text(item.Description).appendTo(row);
+                        });
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert('Error getting Todos');
+                    }
+                });
+            });
+        });
+
+
+    </script>
+}

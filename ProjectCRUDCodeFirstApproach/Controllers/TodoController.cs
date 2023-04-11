@@ -40,6 +40,7 @@ namespace ProjectCRUDCodeFirstApproach.Controllers
             else
             {
                 Debug.Write(todo.ToString());
+                return View();
             }
             return RedirectToAction("Index");
         }
@@ -77,5 +78,13 @@ namespace ProjectCRUDCodeFirstApproach.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult MyAction(string param1, string param2)
+        {
+            // do something with the parameters
+            Debug.WriteLine($"Param1 : {param1}. Param2 : {param2}");
+            return Json(new { result = "success" }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
